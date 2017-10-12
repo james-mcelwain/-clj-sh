@@ -2,6 +2,14 @@
   (:require [clojure.test :refer :all]
             [clj-sh.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+
+(deftest cd-relative
+  (cd "./src"))
+
+(deftest cd-home
+  (cd "~")
+  (is (= @!cwd @!home)))
+
+(deftest cd-root
+  (cd "/lib")
+  (is (= @!cwd "/lib")))
