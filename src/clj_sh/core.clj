@@ -18,7 +18,6 @@
                 (not (.isDirectory file)) (error/ENOTDIR path)
                 :else (swap! !cwd (fn [dir] (.toString path)))))]
 
-
     (cond
 
       ;; relative to home
