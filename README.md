@@ -1,14 +1,1 @@
-# clj-sh
-
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
-
-## License
-
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+REPL friendly re-implementations of common bashisms / unix commands, with the end goal of living in a REPL forever.
