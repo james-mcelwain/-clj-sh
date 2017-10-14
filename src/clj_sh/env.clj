@@ -15,3 +15,8 @@
   ([] @!env)
   ([key] (get-env key))
   ([key value] (set-env key value)))
+
+(env :cwd (.getCanonicalPath (io/file ".")))
+(env :home (System/getenv "HOME"))
+
+
