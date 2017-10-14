@@ -38,5 +38,3 @@
             file (do (println path)(io/file path))]
         (change-path file path)))))
 
-
-(cd "/lib/src")

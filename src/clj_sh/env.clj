@@ -12,5 +12,6 @@
   value)
 
 (defn env
+  ([] @!env)
   ([key] (get-env key))
   ([key value] (set-env key value)))
