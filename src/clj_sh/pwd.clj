@@ -1,3 +1,3 @@
-(ns clj-sh.cwd)
+(ns clj-sh.pwd)
 
 (defn pwd [] (env :cwd))
