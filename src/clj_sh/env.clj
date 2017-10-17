@@ -1,4 +1,5 @@
-(ns clj-sh.env)
+(ns clj-sh.env
+  (:require [clojure.java.io :as io]))
 
 (def !env (atom {}))
 (defn- get-env [key]

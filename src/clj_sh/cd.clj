@@ -29,5 +29,5 @@
       :else
       (let [parts (concat (str/split (env :cwd) #"/") (str/split target-dir #"/"))
             path (.normalize (java.nio.file.Paths/get "/" (into-array parts)))
-            file (do (println path)(io/file path))]
+            file (io/file path)]
         (change-path file path)))))
