@@ -4,12 +4,12 @@
             [clojure.java.io :as io]
             [clojure.string :as str]))
 
-(defn cd [target-dir]
+(defn maybe-cd [target-dir]
   (let [change-path
         (fn [file path]
-          (cond (not (.exists file)) (error/ENOENT path)
-                (not (.isDirectory file)) (error/ENOTDIR path)
-                :else (env :cwd (.toString path))))]
+          (cond (not (.exists file)) [:left (error/ENOENT path)]
+                (not (.isDirectory file)) [:left (error/ENOTDIR path)]
+                :else [:right (env :cwd (.toString path))]))]
 
     (cond
 
@@ -31,3 +31,7 @@
             path (.normalize (java.nio.file.Paths/get "/" (into-array parts)))
             file (io/file path)]
         (change-path file path)))))
+
+(defn cd [target-dir]
+  ;; discard error, we can return it normally
+  (second (maybe-cd target-dir)))
