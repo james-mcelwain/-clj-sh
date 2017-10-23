@@ -1,6 +1,44 @@
 (ns clj-sh.rm
-  (:require [clj-sh.env :refer [env]]))
+  (:require
+   [clj-sh.env :refer [env]]
+   [clj-sh.error :as error]
+   [clj-sh.util.file :refer [file-path]]
+   [clj-sh.util.file-visitor :refer [walk-file-tree]]))
 
-(defmulti rm identity)
-(defmethod rm :rf [_ path] path)
-(defmethod rm :default [_] :default)
+
+(defn visit-file [this file attrs]
+  (println "visit file")
+  (println file)
+  (java.nio.file.Files/delete file)
+  (java.nio.file.FileVisitResult/CONTINUE))
+
+(defn post-visit-directory [this dir exc]
+  (println "visit dir")
+  (println dir)
+  (if-not (nil? exc)
+    (throw exc)
+    (do (java.nio.file.Files/delete dir)
+     (java.nio.file.FileVisitResult/CONTINUE))))
+
+(defmulti rm (fn [& args] (first args)))
+
+(defmethod rm :default [target]
+  (let [{file :file path :path } (file-path target)]
+    (if (not (.exists file))
+      (error/ENOENT path)
+      (do
+        (java.nio.file.Files/delete path)
+        target))))
+
+(defmethod rm :rf [_ target]
+  (let [{file :file path :path} (file-path target)]
+    (if (not (.exists file))
+      (error/ENOENT path)
+      (try
+
+        (do
+          (walk-file-tree path {:visit-file visit-file
+                                :post-visit-directory post-visit-directory})
+          target)
+        (catch clojure.lang.ExceptionInfo e
+          (.toString e))))))

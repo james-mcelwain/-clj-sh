@@ -7,6 +7,7 @@ Done:
 - pushd / popd
 - pwd
 - touch
+- rm
 
 TODO: 
 
