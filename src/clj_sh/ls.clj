@@ -4,10 +4,15 @@
    [clj-sh.util.file :refer [file-path]]
    [clj-sh.util.java :refer [to-alist]]))
 
+<<<<<<< HEAD
 ;; NB: We have to use C-c C-p or cider-pprint-eval-last-sexp to be able
 ;; to see the pretty printed version of this command
 
 (defn ls-la-printer [res file]
+=======
+
+(defn ls-printer [res file]
+>>>>>>> 7df9c7908f86cdc23b1561f622b17427fe076588
   (let [d (if (.isDirectory file) "d" "-")
         r (if (.canRead file) "r" "-")
         w (if (.canWrite file) "w" "-")
@@ -15,10 +20,13 @@
         name (.getName file)]
     (str res d r w x " " name "\n")))
 
+<<<<<<< HEAD
 (defn ls-printer [files target]
   (let [prefix (if (= (last target) \/) target (str target "/"))]
     (clojure.string/join " " (map #(clojure.string/replace % (re-pattern prefix) "") files))))
 
+=======
+>>>>>>> 7df9c7908f86cdc23b1561f622b17427fe076588
 (defn get-sorted-files [dir]
   (let [files (to-alist (.listFiles dir))]
     (do
