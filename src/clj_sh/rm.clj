@@ -5,7 +5,7 @@
    [clj-sh.util.file :refer [file-path]]
    [clj-sh.util.file-visitor :refer [walk-file-tree]]))
 
-
+;; visitor overrides
 (defn visit-file [this file attrs]
   (println "visit file")
   (println file)
@@ -18,7 +18,7 @@
   (if-not (nil? exc)
     (throw exc)
     (do (java.nio.file.Files/delete dir)
-     (java.nio.file.FileVisitResult/CONTINUE))))
+        (java.nio.file.FileVisitResult/CONTINUE))))
 
 (defmulti rm (fn [& args] (first args)))
 

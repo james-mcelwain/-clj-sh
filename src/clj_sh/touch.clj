@@ -13,4 +13,4 @@
     (if (or (.exists file) (.isDirectory file))
       (.setLastModified file (System/currentTimeMillis))
       (io/writer file))
-    '()))
+    target))
