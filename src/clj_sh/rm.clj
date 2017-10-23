@@ -35,7 +35,6 @@
     (if (not (.exists file))
       (error/ENOENT path)
       (try
-
         (do
           (walk-file-tree path {:visit-file visit-file
                                 :post-visit-directory post-visit-directory})
