@@ -2,8 +2,7 @@
   (:require
    [clj-sh.cd :refer [maybe-cd]]
    [clj-sh.env :refer [env]]
-   [clj-sh.error :as error]
-   [clojure.core.match :refer [match]]))
+   [clj-sh.error :as error]))
 
 (env :dir-stack '())
 
