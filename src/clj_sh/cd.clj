@@ -1,5 +1,8 @@
 (ns clj-sh.cd
-  (:require [clj-sh.util.file :refer [file-path]]))
+  (:require
+   [clj-sh.error :as error]
+   [clj-sh.env :refer [env]]
+   [clj-sh.util.file :refer [file-path]]))
 
 (defn maybe-cd [target-dir]
   (let [{file :file path :path} (file-path target-dir)]

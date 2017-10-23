@@ -4,8 +4,11 @@
    [clj-sh.util.file :refer [file-path]]
    [clj-sh.util.java :refer [to-alist]]))
 
-;; NB: We have to use C-c C-p or cider-pprint-eval-last-sexp to be able
-;; to see the pretty printed version of this command
+(defn get-dir [target]
+  (let [{dir :file} (file-path target)]
+    (if (not (.isDirectory dir))
+      [:left (error/ENOTDIR target)]
+      [:right dir])))
 
 (defn ls-la-printer [res file]
   (let [d (if (.isDirectory file) "d" "-")
@@ -19,36 +22,17 @@
   (let [prefix (if (= (last target) \/) target (str target "/"))]
     (clojure.string/join " " (map #(clojure.string/replace % (re-pattern prefix) "") files))))
 
-(defn get-sorted-files [dir]
-  (let [files (to-alist (.listFiles dir))]
-    (do
-      (java.util.Collections/sort files ci-compare)
-      files)))
-
-(defn hidden-file? [name]
-  (not (= \. (first (.getName name)))))
-
 (defn ls- [target]
-  (let [{dir :file} (file-path target)]
-    (if (not (.isDirectory dir))
-      (error/ENOTDIR target))
-    (let [files (filter hidden-file? (get-sorted-files dir))]
-      (ls-printer (into [] files) target))))
-
+  (error/unwrap (get-dir target) #(ls-printer (filter hidden-file? (get-sorted-files %)) target)))
 
 (defn ls-a [target]
-  (let [{dir :file} (file-path target)]
-    (if (not (.isDirectory dir))
-      (error/ENOTDIR target))
-    (let [files (get-sorted-files dir)]
-      (ls-printer (into [] files) target))))
+  (error/unwrap (get-dir target) #(ls-printer (get-sorted-files %) target)))
 
 (defn ls-la [target]
-  (let [{dir :file} (file-path target)]
-    (if (not (.isDirectory dir))
-      (error/ENOTDIR target))
-    (let [files (get-sorted-files dir)]
-      (reduce ls-la-printer "" files))))
+  (error/unwrap (get-dir target) #(reduce ls-la-printer "" (get-sorted-files %))))
+
+;; NB: We have to use C-c C-p or cider-pprint-eval-last-sexp to be able
+;; to see the pretty printed version of this command
 
 (defmulti ls (fn [& args] (first args)))
 (defmethod ls :default [target] (ls- target))
