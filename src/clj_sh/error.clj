@@ -6,8 +6,10 @@
          [:left err] err
          [:right val] (f val)))
 
+(defn EEXIST [file] (str "File xists ") file)
+
 (defn ENOENT [file] (str "No such file or directory " file))
 
 (defn ENOTDIR [file] (str "Not a directory " file))
 
-(defn EISDIR [file] (str "Is a a directory" file))
+(defn EISDIR [file] (str "Is a directory " file))
