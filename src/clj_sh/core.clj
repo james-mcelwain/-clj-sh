@@ -9,3 +9,5 @@
    [clj-sh.pwd :refer [pwd]]
    [clj-sh.rm :refer [rm]]
    [clj-sh.touch :refer [touch]]))
+ 
+(pwd)

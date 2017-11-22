@@ -5,11 +5,6 @@
    [clojure.java.io :as io]
    [clojure.string :as str]))
 
-(defn read-file-to-text [target]
-  (let [{file :file} (file-path target)]
-    (cond (not (.exists file)) [:left (error/ENOENT target)]
-          (.isDirectory file) [:left (error/EISDIR target)]
-          :else [:right (slurp file)])))
 
 (defn file-path [target]
   (cond
@@ -31,3 +26,9 @@
           path (.normalize (java.nio.file.Paths/get "/" (into-array parts)))
           file (io/file path)]
       {:file file :path path})))
+
+(defn read-file-to-text [target]
+  (let [{file :file} (file-path target)]
+    (cond (not (.exists file)) [:left (error/ENOENT target)]
+          (.isDirectory file) [:left (error/EISDIR target)]
+          :else [:right (slurp file)])))
