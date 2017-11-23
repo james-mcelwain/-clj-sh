@@ -18,14 +18,21 @@
         name (.getName file)]
     (str res d r w x " " name "\n")))
 
-;; BROKEN
-(defn ci-compare [a b] 1)
+(defn ci-compare [a b]
+  (.compareToIgnoreCase (.getName a) (.getName b)))
+
+(defn hidden-file? [f]
+  (= (first f) \.))
 
 (defn get-sorted-files [dir]
   (let [files (to-alist (.listFiles dir))]
     (do
       (java.util.Collections/sort files ci-compare)
       files)))
+
+(defn hidden-file? [name]
+  (not (= \. (first (.getName name)))))
+
 
 (defn ls-printer [files target]
   (let [prefix (if (= (last target) \/) target (str target "/"))]
