@@ -18,6 +18,15 @@
         name (.getName file)]
     (str res d r w x " " name "\n")))
 
+;; BROKEN
+(defn ci-compare [a b] 1)
+
+(defn get-sorted-files [dir]
+  (let [files (to-alist (.listFiles dir))]
+    (do
+      (java.util.Collections/sort files ci-compare)
+      files)))
+
 (defn ls-printer [files target]
   (let [prefix (if (= (last target) \/) target (str target "/"))]
     (clojure.string/join " " (map #(clojure.string/replace % (re-pattern prefix) "") files))))
