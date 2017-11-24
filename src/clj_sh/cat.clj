@@ -1,8 +1,6 @@
 (ns clj-sh.cat
-  (:require [clj-sh.util.file :refer [read-file-to-text]]))
+  (:require [clj-sh.util.file :refer [read-file-to-text]]
+            [clj-sh.error :as error]))
 
-;; we are not going to implement all forms of cat obviously, just start with
-;; printing the file
-
-(defn cat [target]
-  (read-file-to-text target))
+(defn cat [& targets]
+  (clojure.string/join "\n" (map #(-> % read-file-to-text error/unwrap) targets)))
