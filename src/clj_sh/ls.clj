@@ -2,7 +2,8 @@
   (:require
    [clj-sh.error :as error]
    [clj-sh.util.file :refer [file-path]]
-   [clj-sh.util.java :refer [to-alist]]))
+   [clj-sh.util.java :refer [to-alist]]
+   [clj-sh.env :refer [env]]))
 
 (defn get-dir [target]
   (let [{dir :file} (file-path target)]
@@ -33,7 +34,6 @@
 (defn hidden-file? [name]
   (not (= \. (first (.getName name)))))
 
-
 (defn ls-printer [files target]
   (let [prefix (if (= (last target) \/) target (str target "/"))]
     (clojure.string/join " " (map #(clojure.string/replace % (re-pattern prefix) "") files))))
@@ -54,3 +54,4 @@
 (defmethod ls :default [target] (ls- target))
 (defmethod ls :a [_ target] (ls-a target))
 (defmethod ls :la [_ target] (ls-la target))
+
