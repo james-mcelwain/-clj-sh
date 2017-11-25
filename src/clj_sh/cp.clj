@@ -13,5 +13,3 @@
       (.exists file2) (error/EEXIST p2)
       (not (.exists (.getParentFile file2))) (error/ENOENT p2)
       :else (java.nio.file.Files/copy path1 path2 java.nio.file.StandardCopyOption/COPY_ATTRIBUTES))))
-
-(cp "./project.clj" "../ok")
