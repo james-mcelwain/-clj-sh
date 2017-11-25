@@ -7,14 +7,10 @@
 
 ;; visitor overrides
 (defn visit-file [this file attrs]
-  (println "visit file")
-  (println file)
   (java.nio.file.Files/delete file)
   (java.nio.file.FileVisitResult/CONTINUE))
 
 (defn post-visit-directory [this dir exc]
-  (println "visit dir")
-  (println dir)
   (if-not (nil? exc)
     (throw exc)
     (do (java.nio.file.Files/delete dir)
