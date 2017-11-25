@@ -55,3 +55,4 @@
 (defmethod ls :a [_ target] (ls-a target))
 (defmethod ls :la [_ target] (ls-la target))
 
+(defn la [target] (ls :la target))

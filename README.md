@@ -8,6 +8,9 @@ Done:
 - pwd
 - touch
 - rm
+- mkdir
+- ls
+- cat
 
 TODO: 
 
