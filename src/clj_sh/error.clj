@@ -7,7 +7,7 @@
                      [:left err] err
                      [:right val] (f val))))
 
-(defn EEXIST [file] (str "File exists ") file)
+(defn EEXIST [file] (str "File exists " file))
 
 (defn ENOENT [file] (str "No such file or directory " file))
 
