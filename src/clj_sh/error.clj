@@ -1,11 +1,18 @@
-(ns clj-sh.error
-  (:require [clojure.core.match :refer [match]]))
+(ns clj-sh.error)
+
+(defn right? [[hand val]]
+  (= hand :right))
+
+(defn left? [[hand val]]
+  (= hand :left))
 
 (defn unwrap
   ([either] (unwrap either identity))
-  ([either f] (match either
-                     [:left err] err
-                     [:right val] (f val))))
+  ([either f]
+   (cond
+     (left? either) (second either)
+     (right? either) (f (second either))
+     :else (throw "must pass either"))))
 
 (defn EEXIST [file] (str "File exists " file))
 
